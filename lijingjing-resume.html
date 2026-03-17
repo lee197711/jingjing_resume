@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李晶晶 | AI产品经理 - 个人微网站</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // 定制高级科技风配色
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',   // 靛蓝色 (主色)
+                        primaryHover: '#4338ca',
+                        secondary: '#0d9488', // 翡翠绿 (AI/科技点缀色)
+                        surface: '#f8fafc',   // 高级灰底色
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 动画与细节样式 */
+        body {
+            background-color: #f8fafc;
+            overflow-y: scroll;
+        }
+
+        /* 隐藏滚动条但保持功能 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 卡片悬浮玻璃态效果 */
+        .glass-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border-color: #e2e8f0;
+        }
+
+        /* 页面切换动画 */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 打字机光标闪烁 */
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .typing-cursor {
+            border-right: 2px solid #4f46e5;
+            animation: blink 0.8s step-end infinite;
+            padding-right: 4px;
+        }
+
+        /* 渐变文字 */
+        .text-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- 顶部玻璃态导航栏 -->
+    <nav
+        class="fixed top-0 w-full bg-white/70 backdrop-blur-lg border-b border-slate-200/50 z-50 transition-all duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Logo 区 -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="switchTab('about')">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                        <i class="fa-solid fa-layer-group text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight text-slate-900">李晶晶</h1>
+                        <p class="text-xs text-slate-500 font-medium">AI Product Manager</p>
+                    </div>
+                </div>
+
+                <!-- PC端导航 -->
+                <div class="hidden md:flex space-x-2 bg-slate-100/80 p-1 rounded-xl">
+                    <button onclick="switchTab('about')" id="nav-about"
+                        class="nav-btn active px-5 py-2 rounded-lg text-sm font-semibold transition-all text-primary bg-white shadow-sm">首页简介</button>
+                    <button onclick="switchTab('experience')" id="nav-experience"
+                        class="nav-btn px-5 py-2 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-900 transition-all">项目驱动</button>
+                    <button onclick="switchTab('skills')" id="nav-skills"
+                        class="nav-btn px-5 py-2 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-900 transition-all">能力矩阵</button>
+                    <button onclick="switchTab('education')" id="nav-education"
+                        class="nav-btn px-5 py-2 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-900 transition-all">教育荣誉</button>
+                </div>
+
+                <!-- 右侧操作区 -->
+                <div class="flex items-center gap-4">
+                    <a href="mailto:chingbit@outlook.com"
+                        class="text-slate-400 hover:text-primary transition-colors hidden sm:block" title="发送邮件">
+                        <i class="fa-regular fa-envelope text-xl"></i>
+                    </a>
+                    <a href="./李晶晶-PM-15708707398.pdf" download="李晶晶_AI产品经理简历.pdf"
+                        class="hidden sm:flex items-center gap-2 bg-slate-900 hover:bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-md shadow-slate-900/10">
+                        <i class="fa-solid fa-download"></i> 简历 PDF
+                    </a>
+                    <!-- 移动端菜单下拉提示 -->
+                    <div class="md:hidden text-primary text-sm font-medium pr-2">向左滑动菜单 <i
+                            class="fa-solid fa-arrow-right-long opacity-50"></i></div>
+                </div>
+            </div>
+
+            <!-- 移动端导航 (横向滚动) -->
+            <div class="md:hidden flex space-x-2 overflow-x-auto no-scrollbar pb-3 pt-1">
+                <button onclick="switchTab('about')" id="mobile-nav-about"
+                    class="nav-btn active whitespace-nowrap px-4 py-1.5 rounded-lg text-sm font-medium bg-white text-primary shadow-sm border border-slate-200">简介</button>
+                <button onclick="switchTab('experience')" id="mobile-nav-experience"
+                    class="nav-btn whitespace-nowrap px-4 py-1.5 rounded-lg text-sm font-medium text-slate-600 bg-transparent border border-transparent">项目</button>
+                <button onclick="switchTab('skills')" id="mobile-nav-skills"
+                    class="nav-btn whitespace-nowrap px-4 py-1.5 rounded-lg text-sm font-medium text-slate-600 bg-transparent border border-transparent">技能</button>
+                <button onclick="switchTab('education')" id="mobile-nav-education"
+                    class="nav-btn whitespace-nowrap px-4 py-1.5 rounded-lg text-sm font-medium text-slate-600 bg-transparent border border-transparent">教育</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主体内容 -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-32 pb-20 min-h-screen">
+
+        <!-- ==================== 1. 首页/关于我 ==================== -->
+        <section id="about" class="tab-content active">
+            <!-- Hero 卡片 -->
+            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 relative overflow-hidden">
+                <!-- 装饰背景 -->
+                <div
+                    class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl">
+                </div>
+
+                <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-10 relative z-10">
+                    <div class="w-full md:w-2/3 space-y-6 text-center md:text-left">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-primary text-xs font-bold uppercase tracking-wider mb-2">
+                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> Available for Internship
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                            我是 李晶晶<br>
+                            <span
+                                class="text-gradient typing-cursor text-3xl md:text-4xl block mt-3">懂AI边界的复合型产品经理</span>
+                        </h1>
+                        <p class="text-lg text-slate-600 leading-relaxed font-medium">
+                            <i class="fa-solid fa-quote-left text-slate-300 mr-2"></i>
+                            硬核技术底色 × 敏锐商业嗅觉。拥有计算机视觉与大模型底层理论支撑，熟练运用 Vibe Coding 完成产品MVP全栈落地。<i
+                                class="fa-solid fa-quote-right text-slate-300 ml-2"></i>
+                        </p>
+
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
+                            <span
+                                class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 flex items-center gap-2">
+                                <i class="fa-solid fa-phone text-slate-400"></i> 157-0870-7398
+                            </span>
+                            <span
+                                class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-slate-400"></i> chingbit@outlook.com
+                            </span>
+                            <span
+                                class="px-4 py-2 bg-teal-50 border border-teal-100 rounded-xl text-sm font-bold text-secondary flex items-center gap-2">
+                                <i class="fa-solid fa-check-circle"></i> 已获保研，全职实习
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 个人头像/Memoji占位 -->
+                    <div class="w-40 h-40 md:w-56 md:h-56 relative flex-shrink-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-primary to-secondary rounded-full opacity-20 animate-pulse">
+                        </div>
+                        <div
+                            class="absolute inset-2 bg-white rounded-full shadow-inner flex items-center justify-center overflow-hidden border-4 border-white">
+                            <!-- 建议替换为你真实的职业/年轻态半身照 -->
+                            <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Jingjing&backgroundColor=transparent"
+                                alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <!-- 悬浮小图标 -->
+                        <div
+                            class="absolute bottom-2 right-2 bg-white p-2 rounded-full shadow-lg text-primary border border-slate-100">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心竞争力摘要 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 glass-hover transition-all">
+                    <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center text-primary mb-4"><i
+                            class="fa-solid fa-rocket"></i></div>
+                    <h3 class="font-bold text-slate-900 mb-2">极强打样与落地能力</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">熟练掌握 Vibe Coding (Cursor/Trae)，具备将 Idea
+                        从0到1快速打样、独立完成前后端MVP开发的能力。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 glass-hover transition-all">
+                    <div class="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center text-secondary mb-4"><i
+                            class="fa-solid fa-brain"></i></div>
+                    <h3 class="font-bold text-slate-900 mb-2">无缝产研沟通底色</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">扎实的 CV (3D重建/检测)
+                        与大模型底层理论。懂Python/C，精准把握AI技术边界，与算法零沟通成本。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 glass-hover transition-all">
+                    <div
+                        class="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center text-orange-500 mb-4">
+                        <i class="fa-solid fa-chart-line"></i></div>
+                    <h3 class="font-bold text-slate-900 mb-2">敏锐商业与产品嗅觉</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">两次主导科技产品从0到1商业化落地。熟练掌握痛点挖掘、竞品分析、商业模式设计 (SaaS/B2B)
+                        及 Roadmap 规划。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 2. 项目经历 (时间轴) ==================== -->
+        <section id="experience" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-3xl font-extrabold text-slate-900">核心项目实践</h2>
+                <p class="text-slate-500 mt-2">从市场痛点出发，用 AI 技术构筑商业闭环。</p>
+            </div>
+
+            <div class="relative border-l-2 border-indigo-100 ml-3 md:ml-4 space-y-10 pb-4">
+
+                <!-- 项目 1 -->
+                <div class="relative pl-8 md:pl-10">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-indigo-50"></div>
+                    <div
+                        class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 glass-hover transition-all relative overflow-hidden">
+                        <!-- 装饰角标 -->
+                        <div
+                            class="absolute top-0 right-0 bg-gradient-to-bl from-indigo-500 to-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl shadow-sm">
+                            AI Native / 全栈打样
+                        </div>
+
+                        <div class="flex flex-col md:flex-row justify-between items-start mb-4 pr-20">
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold text-slate-900">AgentSight - 智能体可视化观测看板</h3>
+                                <p class="text-primary font-medium mt-1 flex items-center gap-2">
+                                    <i class="fa-solid fa-user-tie text-sm"></i> 产品发起人 / 全栈开发 (Vibe Coding)
+                                </p>
+                            </div>
+                            <span
+                                class="text-sm text-slate-500 bg-slate-50 border border-slate-100 px-3 py-1 rounded-lg whitespace-nowrap mt-3 md:mt-0">
+                                2025.11 - 2025.12
+                            </span>
+                        </div>
+
+                        <div class="space-y-4 text-sm md:text-base text-slate-600 leading-relaxed">
+                            <p><strong class="text-slate-800">🎯 产品背景：</strong>针对当前 LLM Agent
+                                开发中“执行逻辑黑盒化、缺乏交互调试界面”的痛点，发起并落地了一款轻量级 Agent 可视化监控 SaaS 工具。</p>
+                            <p><strong class="text-slate-800">🚀 0-1 产品落地：</strong>定义产品 MVP 核心功能，通过 <span
+                                    class="font-bold text-primary">Vibe Coding</span> 在一周内完成全栈打样与部署，实现多智能体统一管理与协作。</p>
+                            <p><strong class="text-slate-800">⚙️ 核心与数据飞轮：</strong>打通 Agent 底层运行逻辑，将大模型的 <code
+                                    class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-700 text-xs">Thought -> Action -> Observation</code>
+                                步骤拆解并在前端流式 (SSE) 渲染。通过单次加载多任务执行与上下文复用，显著减少 Token 消耗。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 2 -->
+                <div class="relative pl-8 md:pl-10">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-secondary ring-4 ring-teal-50"></div>
+                    <div
+                        class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 glass-hover transition-all">
+                        <div class="flex flex-col md:flex-row justify-between items-start mb-4 gap-4">
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold text-slate-900">“珠光幻影” - 基于多视角NeRF的3D生成SaaS
+                                </h3>
+                                <div class="flex items-center gap-3 mt-1 flex-wrap">
+                                    <p class="text-secondary font-medium"><i class="fa-solid fa-list-check text-sm"></i>
+                                        项目负责人</p>
+                                    <span
+                                        class="text-xs bg-amber-50 text-amber-600 border border-amber-200 px-2 py-0.5 rounded-md flex items-center gap-1">
+                                        <i class="fa-solid fa-certificate"></i> 获2024年专利授权
+                                    </span>
+                                </div>
+                            </div>
+                            <span
+                                class="text-sm text-slate-500 bg-slate-50 border border-slate-100 px-3 py-1 rounded-lg whitespace-nowrap">2023.08
+                                - 2024.10</span>
+                        </div>
+
+                        <div class="space-y-4 text-sm md:text-base text-slate-600 leading-relaxed">
+                            <p><strong class="text-slate-800">洞察与定义：</strong>针对千亿级珠宝与文博 IP
+                                市场传统拍摄成本高、金属反光严重痛点，定义“硬件+SaaS软件”结合的自动化三维重建产品。</p>
+                            <p><strong class="text-slate-800">竞品分析与策略：</strong>多维对比 Shining 3D 等 6 款蓝光/激光扫描仪，确立“白光拍照式
+                                RGB 重建+NeRF 隐式重建”技术路线。</p>
+
+                            <!-- 核心数据高亮块 -->
+                            <div class="flex flex-wrap gap-4 py-2">
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex-1 min-w-[140px]">
+                                    <div class="text-2xl font-extrabold text-slate-800">0.83<span
+                                            class="text-base font-normal text-slate-500">s/幅</span></div>
+                                    <div class="text-xs text-slate-500 mt-1">重建生成速度提升至</div>
+                                </div>
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex-1 min-w-[140px]">
+                                    <div class="text-2xl font-extrabold text-secondary">60<span
+                                            class="text-base font-normal">%</span></div>
+                                    <div class="text-xs text-slate-500 mt-1">综合设备成本降低</div>
+                                </div>
+                            </div>
+
+                            <p><strong class="text-slate-800">商业模式规划：</strong>设计 <span
+                                    class="font-bold text-slate-800">B2B2C</span> 闭环，制定“设备一次销售 + 云端建模 SaaS
+                                订阅（5000元/年）”盈利模式；规划从B端数字化修复到C端虚拟试戴的 Roadmap。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 3 -->
+                <div class="relative pl-8 md:pl-10">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-slate-300 ring-4 ring-slate-50">
+                    </div>
+                    <div
+                        class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 glass-hover transition-all">
+                        <div class="flex flex-col md:flex-row justify-between items-start mb-4 gap-4">
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold text-slate-900">“瞳尺慧视” - 单目测距智能监控平台</h3>
+                                <div class="flex items-center gap-3 mt-1 flex-wrap">
+                                    <p class="text-slate-600 font-medium"><i
+                                            class="fa-solid fa-code-branch text-sm"></i> 项目专员</p>
+                                    <span
+                                        class="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded-md">入选中关村论坛百项新技术榜单</span>
+                                </div>
+                            </div>
+                            <span
+                                class="text-sm text-slate-500 bg-slate-50 border border-slate-100 px-3 py-1 rounded-lg whitespace-nowrap">2024.08
+                                - 2025.05</span>
+                        </div>
+
+                        <div class="space-y-3 text-sm md:text-base text-slate-600 leading-relaxed">
+                            <p><strong class="text-slate-800">产品定位：</strong>针对国内近3000万老旧摄像头升级雷达/双目成本过高痛点，提出<span
+                                    class="font-bold text-primary">“以软代硬”</span>理念，利用纯视觉 AI 算法实现测距与定位。</p>
+                            <p><strong class="text-slate-800">场景拆解：</strong>定义校园安防、超速抓拍等核心业务场景；将底层 YOLOv8 算法封装为标准
+                                API，支持端云结合部署（晟腾910A计算卡）。</p>
+                            <p><strong class="text-slate-800">闭环验证：</strong>主导实地测试（视野 25-200m），优化透视变换算法，使间距误差严格控制在 <span
+                                    class="font-bold text-secondary">2.4%</span> 内，达商业化验收标准。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== 3. 能力矩阵 ==================== -->
+        <section id="skills" class="tab-content">
+            <div class="mb-8 text-center md:text-left">
+                <h2 class="text-3xl font-extrabold text-slate-900">专业能力矩阵</h2>
+                <p class="text-slate-500 mt-2">打通业务、模型与工程的复合型知识域。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- 业务产品能力 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary text-xl">
+                            <i class="fa-solid fa-chess-knight"></i></div>
+                        <h3 class="text-xl font-bold text-slate-900">商业与产品化</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1"><span
+                                    class="font-medium text-slate-700">商业模式设计 (SaaS / B2B)</span> <span
+                                    class="text-primary font-bold">精通</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1"><span class="font-medium text-slate-700">市场调研
+                                    & 竞品分析</span> <span class="text-primary font-bold">精通</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1"><span class="font-medium text-slate-700">产品
+                                    Roadmap 规划</span> <span class="text-primary font-bold">熟练</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1"><span class="font-medium text-slate-700">BP /
+                                    PRD 撰写能力</span> <span class="text-primary font-bold">熟练</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI与大模型 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-secondary text-xl">
+                            <i class="fa-solid fa-sparkles"></i></div>
+                        <h3 class="text-xl font-bold text-slate-900">AI 原生与工程</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span
+                            class="px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg font-medium hover:bg-slate-100 transition-colors">Vibe
+                            Coding (Cursor/Trae)</span>
+                        <span
+                            class="px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg font-medium hover:bg-slate-100 transition-colors">Prompt
+                            Engineering</span>
+                        <span
+                            class="px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg font-medium hover:bg-slate-100 transition-colors">Multi-Agent
+                            协同</span>
+                        <span
+                            class="px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg font-medium hover:bg-slate-100 transition-colors">RAG
+                            机制架构</span>
+                        <span
+                            class="px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg font-medium hover:bg-slate-100 transition-colors">LLM
+                            底层逻辑理解</span>
+                        <span
+                            class="px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg font-medium hover:bg-slate-100 transition-colors">全栈原型打样
+                            (MVP)</span>
+                    </div>
+                </div>
+
+                <!-- 底层技术基座 (跨两列) -->
+                <div class="md:col-span-2 bg-slate-900 p-8 rounded-3xl shadow-md text-white relative overflow-hidden">
+                    <div class="absolute right-0 top-0 opacity-10 text-9xl transform translate-x-10 -translate-y-10"><i
+                            class="fa-solid fa-terminal"></i></div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i
+                            class="fa-solid fa-code text-teal-400"></i> 技术底色 (零沟通成本)</h3>
+                    <p class="text-slate-400 text-sm mb-6 max-w-2xl">懂技术边界的产品经理，才能规划出真正可落地的AI产品。具备扎实的计算机视觉与算力部署经验。</p>
+
+                    <div class="flex flex-wrap gap-3">
+                        <span
+                            class="px-4 py-2 bg-white/10 rounded-xl text-sm backdrop-blur-sm border border-white/10 text-slate-200">Python
+                            / C / Matlab / Verilog</span>
+                        <span
+                            class="px-4 py-2 bg-white/10 rounded-xl text-sm backdrop-blur-sm border border-white/10 text-slate-200">计算机视觉
+                            CV (NeRF / YOLO)</span>
+                        <span
+                            class="px-4 py-2 bg-white/10 rounded-xl text-sm backdrop-blur-sm border border-white/10 text-slate-200">模型训练与参数调优</span>
+                        <span
+                            class="px-4 py-2 bg-white/10 rounded-xl text-sm backdrop-blur-sm border border-white/10 text-slate-200">晟腾
+                            910A 云端算力部署</span>
+                        <span
+                            class="px-4 py-2 bg-white/10 rounded-xl text-sm backdrop-blur-sm border border-white/10 text-slate-200">Linux
+                            操作系统</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== 4. 教育与荣誉 ==================== -->
+        <section id="education" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                <!-- 教育背景 -->
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-md bg-indigo-100 text-primary flex items-center justify-center"><i
+                                class="fa-solid fa-graduation-cap text-sm"></i></div>
+                        教育背景
+                    </h2>
+
+                    <div
+                        class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden h-full">
+                        <div
+                            class="absolute -right-6 -top-6 w-32 h-32 bg-slate-50 rounded-full border-4 border-white shadow-inner flex items-center justify-center opacity-50">
+                            <i class="fa-solid fa-building-columns text-4xl text-slate-200"></i></div>
+
+                        <h3 class="text-2xl font-bold text-slate-900">北京理工大学</h3>
+                        <p class="text-slate-500 font-medium mt-1 mb-6">信息与电子学院 | 电子信息工程 (本科)</p>
+
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="bg-primary/10 text-primary font-bold px-4 py-1.5 rounded-lg text-sm">2022.08 -
+                                至今</span>
+                            <span class="bg-teal-50 text-secondary font-bold px-4 py-1.5 rounded-lg text-sm"><i
+                                    class="fa-solid fa-check mr-1"></i> 已获推免保研资格</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
+                                <div class="text-xs text-slate-500 mb-1">综合成绩 GPA</div>
+                                <div class="text-xl font-extrabold text-slate-800">3.6 <span
+                                        class="text-sm font-normal text-slate-400">/ 4.0</span></div>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
+                                <div class="text-xs text-slate-500 mb-1">英语水平 CET-6</div>
+                                <div class="text-xl font-extrabold text-slate-800">532</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="text-sm text-slate-500 mb-2 font-medium">主修高分课程：</p>
+                            <p class="text-sm text-slate-700 leading-relaxed font-medium">
+                                电子综合设计(100)、智能物联网应用设计(100)、人工智能导论(99)、C语言程序设计(92)、嵌入式系统原理与应用(92)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 荣誉与学生工作 -->
+                <div class="space-y-6">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-3">
+                            <div
+                                class="w-8 h-8 rounded-md bg-amber-100 text-amber-600 flex items-center justify-center">
+                                <i class="fa-solid fa-award text-sm"></i></div>
+                            高光时刻
+                        </h2>
+
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-crown text-amber-500 mt-1"></i>
+                                    <div>
+                                        <strong class="text-slate-800 block">高阶奖学金</strong>
+                                        <span class="text-sm text-slate-600">本科生一等奖学金 (Top 5%)、国家励志奖学金。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-trophy text-amber-500 mt-1"></i>
+                                    <div>
+                                        <strong class="text-slate-800 block">国家级竞赛荣誉</strong>
+                                        <span class="text-sm text-slate-600 leading-relaxed">全国大学生统计建模大赛二等奖
+                                            (2023)、全国光电设计竞赛二等奖 (2024)、华为 ICT 大赛全国二等奖 (2025)。</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-md bg-rose-100 text-rose-500 flex items-center justify-center">
+                                <i class="fa-solid fa-users text-sm"></i></div>
+                            团队领导力
+                        </h2>
+
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-5">
+                            <div class="relative pl-4 border-l-2 border-slate-200">
+                                <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-slate-400"></div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <strong class="text-slate-800 text-sm">校微尘志愿者协会 - 公益部副部长</strong>
+                                    <span class="text-xs text-slate-400">2023.09 - 2024.09</span>
+                                </div>
+                                <p class="text-xs text-slate-500 leading-relaxed">牵头组织社区公益活动 10+
+                                    场，覆盖百余人次；统筹规划与运营落地，带队荣获校青年志愿服务大赛银奖。</p>
+                            </div>
+                            <div class="relative pl-4 border-l-2 border-slate-200">
+                                <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-slate-400"></div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <strong class="text-slate-800 text-sm">电子信息工程班级 - 学习委员</strong>
+                                    <span class="text-xs text-slate-400">2023.09 - 至今</span>
+                                </div>
+                                <p class="text-xs text-slate-500 leading-relaxed">搭建学习交流平台，组织经验分享、考研答疑会，提升团队协同效率与整体成绩。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-slate-200 bg-white">
+        <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-slate-500">© 2024 李晶晶 (Jingjing Li). All rights reserved.</p>
+            <p class="text-xs text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-code"></i> Coded with Vibe (AI-Assisted)
+            </p>
+        </div>
+    </footer>
+
+    <!-- 交互逻辑 JavaScript -->
+    <script>
+        function switchTab(tabId) {
+            // 1. 获取所有内容区和按钮
+            const sections = document.querySelectorAll('.tab-content');
+            const pcBtns = document.querySelectorAll('.nav-btn[id^="nav-"]');
+            const mobileBtns = document.querySelectorAll('.nav-btn[id^="mobile-nav-"]');
+
+            // 2. 隐藏所有内容区
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 3. 移除按钮的高亮状态 (PC)
+            pcBtns.forEach(btn => {
+                btn.className = 'nav-btn px-5 py-2 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-900 transition-all';
+            });
+
+            // 4. 移除按钮的高亮状态 (Mobile)
+            mobileBtns.forEach(btn => {
+                btn.className = 'nav-btn whitespace-nowrap px-4 py-1.5 rounded-lg text-sm font-medium text-slate-600 bg-transparent border border-transparent transition-all';
+            });
+
+            // 5. 显示目标内容区 (触发 CSS 动画)
+            const targetSection = document.getElementById(tabId);
+            setTimeout(() => {
+                targetSection.classList.add('active');
+            }, 50); // 微小延迟确保动画平滑触发
+
+            // 6. 激活对应按钮 (PC)
+            const activePcBtn = document.getElementById('nav-' + tabId);
+            if (activePcBtn) {
+                activePcBtn.className = 'nav-btn active px-5 py-2 rounded-lg text-sm font-semibold transition-all text-primary bg-white shadow-sm';
+            }
+
+            // 7. 激活对应按钮 (Mobile)
+            const activeMobileBtn = document.getElementById('mobile-nav-' + tabId);
+            if (activeMobileBtn) {
+                activeMobileBtn.className = 'nav-btn active whitespace-nowrap px-4 py-1.5 rounded-lg text-sm font-medium bg-white text-primary shadow-sm border border-slate-200 transition-all';
+                // 移动端点击后，将按钮居中滚动
+                activeMobileBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+
+            // 8. 页面平滑滚动回顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
